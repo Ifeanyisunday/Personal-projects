@@ -26,6 +26,18 @@ public class Transaction {
     @JoinColumn(name = "customerwallet_id")
     private CustomerWallet customerWallet;
 
+    public Transaction() {
+
+    }
+
+
+    public Transaction(BigDecimal amount, String type, TransactionStatus status, LocalDateTime time, CustomerWallet customerWallet) {
+        this.amount = amount;
+        this.type = type;
+        this.status = status;
+        this.time = time;
+        this.customerWallet = customerWallet;
+    }
 
 
 }

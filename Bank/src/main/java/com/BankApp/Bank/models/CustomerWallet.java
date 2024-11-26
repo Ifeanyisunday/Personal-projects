@@ -12,10 +12,13 @@ import java.util.List;
 @Setter
 @Getter
 public class CustomerWallet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(nullable = false, length = 5)
     private String password;
     private BigDecimal balance;
 
