@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -17,7 +18,7 @@ import static jakarta.persistence.CascadeType.PERSIST;
 @Entity
 @Setter
 @Getter
-public class Customer{
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,23 +38,22 @@ public class Customer{
 
     public Customer() {}
 
-    public Customer(String username, String password) {
+    public Customer(String username, String password, String acctNo, BigDecimal balance, List<Transaction> transactions, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
-        this.acctNo = generateAcctNo();
-        this.balance = BigDecimal.ZERO;
+        this.acctNo = acctNo;
+        this.balance = balance;
+        this.transactions = transactions;
+        this.authorities = authorities;
     }
 
-    private String generateAcctNo(){
-        SecureRandom secureRandom = new SecureRandom();
-        StringBuilder createAcctNo = new StringBuilder();
+//    public Customer(String username, String password,) {
+//        this.username = username;
+//        this.password = password;
+//        this.acctNo = generateAcctNo();
+//        this.balance = BigDecimal.ZERO;
+//    }
 
-        for(int i = 0; i < 5; i++){
-            secureRandom.nextInt(10);
-            createAcctNo.append(secureRandom);
-        }
-        return createAcctNo.toString();
-    }
 
 
 }
