@@ -19,24 +19,26 @@ public class Transaction {
     private Long id;
     private BigDecimal amount;
     private String type;
+
+    @Enumerated(value = EnumType.STRING)
     private TransactionStatus status;
     private LocalDateTime time;
 
     @ManyToOne
-    @JoinColumn(name = "customerwallet_id")
-    private CustomerWallet customerWallet;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Transaction() {
 
     }
 
 
-    public Transaction(BigDecimal amount, String type, TransactionStatus status, LocalDateTime time, CustomerWallet customerWallet) {
+    public Transaction(BigDecimal amount, String type, TransactionStatus status, LocalDateTime time, Customer customer) {
         this.amount = amount;
         this.type = type;
         this.status = status;
         this.time = time;
-        this.customerWallet = customerWallet;
+        this.customer = customer;
     }
 
 
