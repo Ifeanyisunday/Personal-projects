@@ -23,7 +23,7 @@ public class Customer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false)
     private String password;
     private String acctNo;
     private BigDecimal balance;

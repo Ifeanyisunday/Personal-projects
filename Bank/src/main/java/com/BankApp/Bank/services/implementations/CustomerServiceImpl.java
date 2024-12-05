@@ -54,19 +54,26 @@ public class CustomerServiceImpl{
         return createAcctNo.toString();
     }
 
+    public boolean checkPassword(String password){
+        String pattern2 = "^[0-9]{6}$";
+        return password.matches(pattern2);
+    }
 
     public Customer registerCustomer(CustomerRegisterDto customerRegisterDto) {
-        if(customerRepo.findByUsername(customerRegisterDto.getUsername()).isPresent()){
-            throw new AllUserTypeException("Customer wallet already exist");
-        };
+        if(!checkPassword(customerRegisterDto.getPassword())) {
+            throw  new AllUserTypeException("Username or Password incomplete");
+        }
+            if (customerRepo.findByUsername(customerRegisterDto.getUsername()).isPresent()) {
+                throw new AllUserTypeException("Customer wallet already exist");
+            }
 
-        Customer customer = new Customer();
-        customer.setUsername(customerRegisterDto.getUsername());
-        customer.setPassword(customerRegisterDto.getPassword());
-        customer.setBalance(BigDecimal.ZERO);
-        customer.setAcctNo(generateAcctNo());
-        login(customerRegisterDto);
-        return customerRepo.save(customer);
+            Customer customer = new Customer();
+            customer.setUsername(customerRegisterDto.getUsername());
+            customer.setPassword(customerRegisterDto.getPassword());
+            customer.setBalance(BigDecimal.ZERO);
+            customer.setAcctNo(generateAcctNo());
+            login(customerRegisterDto);
+            return customerRepo.save(customer);
     }
 
     public void deposit(CustomerDepositRequest customerDepositRequest){
